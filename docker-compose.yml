@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  flyway:
+    image: psenior/flyway:1.8
+    command: migrate -X
+    volumes:
+      - type: bind
+        source: /Users/paulsenior/scratch/docker/flyway/sql
+        target: /flyway/sql
+      - type: bind
+        source: /Users/paulsenior/scratch/docker/flyway/conf/flyway.conf
+        target: /flyway/flyway.conf
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD:hello123
+    ports:
+      - 5432:5432
